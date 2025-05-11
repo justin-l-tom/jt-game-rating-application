@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts :: head"></head>
+
+	<body>
+
+		<nav th:replace="layouts :: navbar"></nav>
+
+		<div class="container">
+
+			<br>
+			<h3>Video Games Directory</h3>
+			<hr>
+
+			<a th:href="@{/videogames/new}" class="btn btn-primary btn-sm mb-3" sec:authorize="hasRole('ADMIN')">
+				New Video Games
+			</a>
+
+			<form method="get" th:action="@{/videogames}">
+
+				<label for="genre">Filter by Genre:</label>
+				<select name="genre" id="genre">
+					<option value="">All</option>
+					<option th:each="g : ${allGenres}" th:value="${g}" th:text="${g}" th:selected="${g == selectedGenre}">
+					</option>
+				</select>
+
+				<label for="platform">Filter by Platform:</label>
+				<select name="platform" id="platform">
+					<option value="">All</option>
+					<option th:each="p : ${allPlatforms}" th:value="${p}" th:text="${p}"
+						th:selected="${p == selectedPlatform}"></option>
+				</select>
+
+				<button type="submit">Filter</button>
+				
+			</form>
+			<br>
+
+			<table class="table table-bordered table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>Name</th>
+						<th>Genres</th>
+						<th>Platforms</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="videoGame : ${videoGames}">
+						<td>
+							<a th:href="@{/videogames/{id}(id=${videoGame.videoGameId})}" th:text="${videoGame.name}"></a>
+						</td>
+						<td>
+							<ul>
+								<li th:each="genre : ${videoGame.genres}" th:text="${genre}"></li>
+							</ul>
+						</td>
+						<td>
+							<ul>
+								<li th:each="platform : ${videoGame.platforms}" th:text="${platform}"></li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center">
+
+					<li class="page-item" th:classappend="${videoGames.first} ? 'disabled'">
+					<a class="page-link" aria-label="Previous"
+					   th:href="@{/videogames(
+						  page=${videoGames.number - 1},
+						  genre=${selectedGenre},
+						  platform=${selectedPlatform}
+					   )}">
+					  Previous
+					</a>
+				  </li>
+			  
+
+				  <li class="page-item"
+					  th:each="i : ${#numbers.sequence(0, videoGames.totalPages - 1)}"
+					  th:classappend="${i == videoGames.number} ? 'active'">
+					<a class="page-link"
+					   th:href="@{/videogames(
+						  page=${i},
+						  genre=${selectedGenre},
+						  platform=${selectedPlatform}
+					   )}"
+					   th:text="${i + 1}">1</a>
+				  </li>
+			  
+
+				  <li class="page-item" th:classappend="${videoGames.last} ? 'disabled'">
+					<a class="page-link" aria-label="Next"
+					   th:href="@{/videogames(
+						  page=${videoGames.number + 1},
+						  genre=${selectedGenre},
+						  platform=${selectedPlatform}
+					   )}">
+					  Next
+					</a>
+				  </li>
+				</ul>
+			  </nav>
+
+		</div>
+
+	</body>
+
+</html>

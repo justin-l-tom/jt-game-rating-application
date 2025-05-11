@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts :: head"></head>
+	
+	<body>
+	
+		<nav th:replace="layouts :: navbar"></nav>
+
+			<div class="container">
+				
+				<br>
+				<h3 th:text="${videoGame.name}"></h3>
+				<hr>
+
+				<a th:href="@{/ratings/new(videoGameId=${videoGame.videoGameId})}"
+					class="btn btn-primary btn-sm mb-3"> 
+					Rate This Game 
+				</a>
+
+				<div class="row">
+					<div class="table-responsive col-md-6">
+						<table class="table table-bordered table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th>Genres</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="genre : ${videoGame.genres}">
+									<td th:text="${genre}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="table-responsive col-md-6">
+						<table class="table table-bordered table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th>Platforms</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="platform : ${videoGame.platforms}">
+									<td th:text="${platform}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
+	</body>
+	
+</html>

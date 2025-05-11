@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="layouts :: header"></head>
+
+    <body>
+        
+        <nav th:replace="layouts :: navbar"></nav>
+
+        <br>
+
+        <div class="container">
+            
+            <form th:action="@{/videogames/save}" th:object="${videoGame}" method="POST">
+
+                <div class="form-group row">
+                    <input type="text" placeholder="Video Game Name" th:field="${videoGame.name}">
+                    <span style="color:red" th:if="${#fields.hasErrors('name')}"
+                        th:errors="${videoGame.name}">
+                    </span>
+                </div>
+
+                <div class="form-group row">
+                    <select th:field="${videoGame.genres}" multiple="multiple">
+                        <option th:value="ACTION">Action</option>
+                        <option th:value="PLATFORMER">Platformer</option>
+                        <option th:value="PUZZLE">Puzzle</option>
+                        <option th:value="SHOOTER">Shooter</option>
+                    </select>
+                </div>
+                
+                <div class="form-group row">
+                    <select th:field="${videoGame.platforms}" multiple="multiple">
+                        <option th:value="WINDOWS">Windows</option>
+                        <option th:value="PLAYSTATION">PlayStation</option>
+                        <option th:value="XBOX">Xbox</option>
+                        <option th:value="NINTENDO">Nintendo</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-info col-2" type="submit">Enter Video Game</button>
+                
+            </form>
+        </div>
+
+    </body>
+
+</html>

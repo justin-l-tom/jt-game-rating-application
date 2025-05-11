@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="layouts :: head"></head>
+	
+	<body>
+	
+		<nav th:replace="layouts :: navbar"></nav>
+
+			<div class="container">
+				
+				<br>
+				<h3 th:text="|${profile.userName}'s Profile|"></h3>
+				<hr>
+
+				<div class="row">
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped">
+							<thead class="thead-dark">
+								<tr>
+									<th>Video Games</th>
+									<th>Scores</th>
+									<th>Reviews</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="rating : ${ratings}">
+									<td th:text="${rating.videoGame.name}"></td>
+									<td th:text="${rating.score}"></td>
+									<td th:text="${rating.reviewText}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+			</div>
+
+	</body>
+	
+</html>

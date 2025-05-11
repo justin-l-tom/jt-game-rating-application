@@ -1,0 +1,1 @@
+# jt-game-rating-application
